@@ -1,0 +1,97 @@
+openapi: 3.0.3
+info:
+  title: EthnoGenomic Glossary API
+  version: "0.1.0"
+servers:
+  - url: http://localhost:8000
+paths:
+  /health:
+    get:
+      summary: Health check
+      responses:
+        "200":
+          description: OK
+  /terms:
+    get:
+      summary: List terms
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+          description: Search text
+      responses:
+        "200":
+          description: List of terms
+  /suggestions:
+    get:
+      summary: Top search suggestions
+      parameters:
+        - in: query
+          name: limit
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: List of suggestions
+  /terms/{id}:
+    get:
+      summary: Get term by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Term
+        "404":
+          description: Not found
+  /terms/{id}/related:
+    get:
+      summary: Related terms
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Relations
+  /alphabet/{letter}:
+    get:
+      summary: Alphabet index
+      parameters:
+        - in: path
+          name: letter
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Terms by letter
+  /admin/term:
+    post:
+      summary: Create term (admin)
+      responses:
+        "201":
+          description: Created
+  /admin/relation:
+    post:
+      summary: Create relation (admin)
+      responses:
+        "201":
+          description: Created
+  /search:
+    get:
+      summary: Full-text search
+      parameters:
+        - in: query
+          name: query
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Terms
